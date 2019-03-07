@@ -4,9 +4,41 @@
 #include "pch.h"
 #include <iostream>
 
+uint16_t ZerosFactorial(uint16_t InputNumber);
+
 int main()
+//given integer, find number of trailing zeros in its factorial
 {
-    std::cout << "Hello World!\n"; 
+	int NumberToFactorial;
+	int NumberOfZeroes;
+	//Test case 1: 0! = 1 -> 0 trailing zeroes
+	NumberToFactorial = 0;
+	NumberOfZeroes = ZerosFactorial(NumberToFactorial);
+
+	//Test case 2: 5! = 120 -> 1 trailing zero
+	NumberToFactorial = 5;
+	NumberOfZeroes = ZerosFactorial(NumberToFactorial);
+
+	//add some sample numbers to factorial above
+	std::cout << "Enter number to take factorial of: " << std::endl;
+	std::cin >> NumberToFactorial;
+	std::cout << "Number of trailing zeroes is: " << std::endl << NumberOfZeroes;
+}
+
+uint16_t ZerosFactorial(uint16_t InputNumber)
+{
+	//Naive algorithm; won't handle large integers
+	uint16_t Zeroes = 0;	//counter for number of zeroes
+	uint16_t Factorial = InputNumber;
+	while (InputNumber > 1) {
+		InputNumber--;
+		Factorial = Factorial * InputNumber;
+	}
+	while (Factorial % 10 == 0 && Factorial > 0) {
+		Factorial = Factorial / 10;
+		Zeroes += 1;
+	}
+	return Zeroes;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
