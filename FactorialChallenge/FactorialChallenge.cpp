@@ -22,6 +22,7 @@ int main()
 	//add some sample numbers to factorial above
 	std::cout << "Enter number to take factorial of: " << std::endl;
 	std::cin >> NumberToFactorial;
+	NumberOfZeroes = ZerosFactorial(NumberToFactorial);
 	std::cout << "Number of trailing zeroes is: " << std::endl << NumberOfZeroes;
 }
 
