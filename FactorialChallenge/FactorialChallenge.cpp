@@ -3,34 +3,41 @@
 
 #include "pch.h"
 #include <iostream>
+#include <math.h>
 
-uint16_t ZerosFactorial(uint16_t InputNumber);
+uint64_t ZerosFactorial(uint64_t InputNumber);
 
 int main()
 //given integer, find number of trailing zeros in its factorial
 {
-	int NumberToFactorial;
-	int NumberOfZeroes;
+	uint64_t NumberToFactorial;
+	uint64_t NumberOfZeroes;
 	//Test case 1: 0! = 1 -> 0 trailing zeroes
 	NumberToFactorial = 0;
 	NumberOfZeroes = ZerosFactorial(NumberToFactorial);
+	//assert equal to 0
 
 	//Test case 2: 5! = 120 -> 1 trailing zero
 	NumberToFactorial = 5;
 	NumberOfZeroes = ZerosFactorial(NumberToFactorial);
+	//assert equal to 1
 
 	//add some sample numbers to factorial above
-	std::cout << "Enter number to take factorial of: " << std::endl;
+	std::cout << "Enter positive number to take factorial of: " << std::endl;
 	std::cin >> NumberToFactorial;
 	NumberOfZeroes = ZerosFactorial(NumberToFactorial);
 	std::cout << "Number of trailing zeroes is: " << std::endl << NumberOfZeroes;
 }
 
-uint16_t ZerosFactorial(uint16_t InputNumber)
+uint64_t ZerosFactorial(uint64_t InputNumber)
 {
-	//Naive algorithm; won't handle large integers
-	uint16_t Zeroes = 0;	//counter for number of zeroes
-	uint16_t Factorial = InputNumber;
+	if (InputNumber<0)
+	{
+		throw std::invalid_argument("Factorial only accepts integers greater than 0."); //does not ensure input value is positive
+	}
+	//Naive algorithm; won't handle large integers (handles up to 9)
+	uint64_t Zeroes = 0;	//counter for number of zeroes
+	uint64_t Factorial = InputNumber;
 	while (InputNumber > 1) {
 		InputNumber--;
 		Factorial = Factorial * InputNumber;
