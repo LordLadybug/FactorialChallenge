@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <iostream>
 #include <math.h>
+#include <assert.h>
 
 uint64_t ZerosFactorial(uint64_t InputNumber);
 
@@ -15,12 +16,12 @@ int main()
 	//Test case 1: 0! = 1 -> 0 trailing zeroes
 	NumberToFactorial = 0;
 	NumberOfZeroes = ZerosFactorial(NumberToFactorial);
-	//assert equal to 0
+	assert(NumberOfZeroes == 0);
 
 	//Test case 2: 5! = 120 -> 1 trailing zero
 	NumberToFactorial = 5;
 	NumberOfZeroes = ZerosFactorial(NumberToFactorial);
-	//assert equal to 1
+	assert(NumberOfZeroes == 1);
 
 	//add some sample numbers to factorial above
 	std::cout << "Enter positive number to take factorial of: " << std::endl;
@@ -35,18 +36,16 @@ uint64_t ZerosFactorial(uint64_t InputNumber)
 	{
 		throw std::invalid_argument("Factorial only accepts integers greater than 0."); //does not ensure input value is positive
 	}
-	//Naive algorithm; won't handle large integers (handles up to 9)
+	//Better algorithm: Simple divide number by 5 and take floor (already handled by integer division)
 	uint64_t Zeroes = 0;	//counter for number of zeroes
-	uint64_t Factorial = InputNumber;
-	while (InputNumber > 1) {
-		InputNumber--;
-		Factorial = Factorial * InputNumber;
-	}
-	while (Factorial % 10 == 0 && Factorial > 0) {
-		Factorial = Factorial / 10;
-		Zeroes += 1;
+	uint64_t fiveCounter;
+	for (fiveCounter = 5; fiveCounter <= InputNumber; fiveCounter *= 5) {
+		Zeroes += InputNumber / fiveCounter;
 	}
 	return Zeroes;
+	/*New trailing zero only added for each 10 that can be factorized out of the factorial; since the density of numbers divisible by 2
+	is much higher than the density of numbers divisible by 5, we can solve this problem for large numbers by simply noting
+	that a new trailing zero is generated every time we multiply by another multiple of 5, or better yet, multiple of 10. */
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
